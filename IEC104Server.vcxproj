@@ -18,7 +18,7 @@
     <ClCompile Include="gui\main.cpp" />
     <ClCompile Include="gui\MainWindow.cpp" />
     <ClCompile Include="gui\SNMPWindow.cpp" />
-    <ClCompile Include="StatusWindow.cpp" />
+    <ClCompile Include="gui\StatusWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="gui\MainWindow.h" />
@@ -28,6 +28,7 @@
     <Image Include="gui\icon\NO.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="gui\language\iec104server_nb.qm" />
     <None Include="gui\language\iec104server_nb.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -37,7 +38,7 @@
     <QtMoc Include="gui\SNMPWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="StatusWindow.h" />
+    <QtMoc Include="gui\StatusWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>

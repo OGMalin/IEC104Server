@@ -52,7 +52,7 @@
     <ClCompile Include="gui\SNMPWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StatusWindow.cpp">
+    <ClCompile Include="gui\StatusWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,6 +68,9 @@
     <None Include="gui\language\iec104server_nb.ts">
       <Filter>Translation Files</Filter>
     </None>
+    <None Include="gui\language\iec104server_nb.qm">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="gui\MainWindow.h">
@@ -79,7 +82,7 @@
     <QtMoc Include="gui\SNMPWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="StatusWindow.h">
+    <QtMoc Include="gui\StatusWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
