@@ -1,21 +1,26 @@
 #pragma once
 
 #include <QObject>
-#include <QString>
 
 class QTcpServer;
-class QNetworkSession;
+class QTcpSocket;
 
 class IEC104Slave : public QObject
 {
 	Q_OBJECT
 
-private:
-	QTcpServer * tcpServer = nullptr;
-	QNetworkSession* networkSession = nullptr;
-	QString masterAddress;
-	int port;
 public:
-	IEC104Slave(QObject *parent);
-	~IEC104Slave();
+	explicit IEC104Slave(QObject *parent = 0);
+	virtual ~IEC104Slave();
+	void start();
+	void stop();
+
+signals:
+
+public slots:
+	void newConnection();
+
+private:
+	QTcpServer * tcpServer;
+	QTcpSocket * tcpSocket;
 };

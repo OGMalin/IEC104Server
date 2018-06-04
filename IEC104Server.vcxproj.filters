@@ -55,9 +55,6 @@
     <ClCompile Include="gui\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gui\IECWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gui\SNMPWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="iec\IEC104Slave.cpp">
       <Filter>IEC</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\IECWindow.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
