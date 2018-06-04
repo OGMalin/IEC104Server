@@ -10,6 +10,7 @@
 #include "StatusWindow.h"
 #include "IECWindow.h"
 #include "SNMPWindow.h"
+#include "../iec/IEC104Slave.h"
 
 MainWindow::MainWindow()
 {
@@ -22,6 +23,7 @@ MainWindow::MainWindow()
 	statuswindow = new StatusWindow();
 	iecwindow = new IECWindow();
 	snmpwindow = new SNMPWindow();
+	iec104 = new IEC104Slave();
 
 	tabbar->addTab(statuswindow, "Status");
 	tabbar->addTab(iecwindow, "IEC");

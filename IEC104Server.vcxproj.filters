@@ -33,6 +33,15 @@
       <Extensions>ts</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="IEC">
+      <UniqueIdentifier>{46d609da-df48-4a4e-a2cf-0eb2ac3f127a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SNMP">
+      <UniqueIdentifier>{e160dfc5-e762-4186-b684-a87b4d79eab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{3fe8fdb4-8e86-4001-9e4b-3d3b8835143d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="gui\IEC104Server.qrc">
@@ -54,6 +63,27 @@
     </ClCompile>
     <ClCompile Include="gui\StatusWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="iec\APCI.cpp">
+      <Filter>IEC</Filter>
+    </ClCompile>
+    <ClCompile Include="iec\APDU.cpp">
+      <Filter>IEC</Filter>
+    </ClCompile>
+    <ClCompile Include="iec\ASDU.cpp">
+      <Filter>IEC</Filter>
+    </ClCompile>
+    <ClCompile Include="common\Utility.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="snmp\ASN.cpp">
+      <Filter>SNMP</Filter>
+    </ClCompile>
+    <ClCompile Include="snmp\SNMP.cpp">
+      <Filter>SNMP</Filter>
+    </ClCompile>
+    <ClCompile Include="iec\IEC104Slave.cpp">
+      <Filter>IEC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,5 +115,28 @@
     <QtMoc Include="gui\StatusWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="iec\IEC104Slave.h">
+      <Filter>IEC</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="iec\APCI.h">
+      <Filter>IEC</Filter>
+    </ClInclude>
+    <ClInclude Include="iec\APDU.h">
+      <Filter>IEC</Filter>
+    </ClInclude>
+    <ClInclude Include="iec\ASDU.h">
+      <Filter>IEC</Filter>
+    </ClInclude>
+    <ClInclude Include="common\Utility.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="snmp\ASN.h">
+      <Filter>SNMP</Filter>
+    </ClInclude>
+    <ClInclude Include="snmp\SNMP.h">
+      <Filter>SNMP</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@ class QTabWidget;
 class StatusWindow;
 class IECWindow;
 class SNMPWindow;
+class IEC104Slave;
 
 class MainWindow : public QMainWindow
 {
@@ -34,6 +35,7 @@ private:
 	StatusWindow* statuswindow;
 	IECWindow* iecwindow;
 	SNMPWindow* snmpwindow;
+	IEC104Slave* iec104;
 	void closeEvent(QCloseEvent* event) override;
 	void createMenu();
 	void loadLanguage();
