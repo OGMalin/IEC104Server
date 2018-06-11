@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QActionGroup>
 #include <QTabWidget>
+#include <QByteArray>
 #include "MainWindow.h"
 #include "StatusWindow.h"
 #include "IECWindow.h"
@@ -31,6 +32,9 @@ MainWindow::MainWindow()
 	
 	setCentralWidget(tabbar);
 	retranslateUi();
+
+	connect(iec104, SIGNAL(readMessage(const QByteArray&)), statuswindow, SLOT(iecReadMessage(const QByteArray&)));
+	connect(iec104, SIGNAL(writeMessage(const QByteArray&)), statuswindow, SLOT(iecWriteMessage(const QByteArray&)));
 }
 
 MainWindow::~MainWindow()
