@@ -2,6 +2,7 @@
 #include <QTextEdit>
 #include <QGridLayout>
 #include <QTextDocument>
+#include "../iec/APDU.h"
 
 StatusWindow::StatusWindow(QWidget* parent)
 	:QWidget(parent)
@@ -19,14 +20,12 @@ StatusWindow::~StatusWindow()
 {
 }
 
-void StatusWindow::iecReadMessage(const QByteArray& data)
+void StatusWindow::iecMessage(const QByteArray& data, bool write)
 {
-	iecLog->setTextColor(QColor("red"));
+	if (write)
+		iecLog->setTextColor(QColor("blue"));
+	else
+		iecLog->setTextColor(QColor("red"));
 	iecLog->append(data.toHex(' '));
 }
 
-void StatusWindow::iecWriteMessage(const QByteArray& data)
-{
-	iecLog->setTextColor(QColor("blue"));
-	iecLog->append(data.toHex(' '));
-}

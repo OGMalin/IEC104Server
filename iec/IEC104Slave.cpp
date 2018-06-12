@@ -58,7 +58,7 @@ void IEC104Slave::readyRead()
 {
 	QByteArray ba;
 	ba=tcpSocket->readAll();
-	emit readMessage(ba);
+	emit iecMessage(ba,false);
 
 	APDU apdu,res;
 	InformationObject inf;
@@ -174,7 +174,7 @@ void IEC104Slave::write(APDU& apdu, bool checkspool)
 	if (len)
 	{
 		ba.setRawData((char*)data, len);
-		emit writeMessage(ba);
+		emit iecMessage(ba, true);
 		tcpSocket->write(ba);
 		Sleep(30); // Venter 30 msec slik at meldingene ikke kommer for tett. (spessielt svar på IC)
 	}

@@ -35,8 +35,7 @@ public:
 	void stop();
 
 signals:
-	void readMessage(const QByteArray&);
-	void writeMessage(const QByteArray&);
+	void iecMessage(const QByteArray&, bool);
 	void iecCommand(const APDU&);
 public slots:
 	void newConnection();

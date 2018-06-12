@@ -13,6 +13,7 @@ class StatusWindow;
 class IECWindow;
 class SNMPWindow;
 class IEC104Slave;
+class Database;
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +37,7 @@ private:
 	IECWindow* iecwindow;
 	SNMPWindow* snmpwindow;
 	IEC104Slave* iec104;
+	Database* db;
 	void closeEvent(QCloseEvent* event) override;
 	void createMenu();
 	void loadLanguage();

@@ -11,6 +11,7 @@
 #include "StatusWindow.h"
 #include "IECWindow.h"
 #include "SNMPWindow.h"
+#include "Database.h"
 #include "../iec/IEC104Slave.h"
 
 MainWindow::MainWindow()
@@ -19,6 +20,8 @@ MainWindow::MainWindow()
 	createMenu();
 	statusBar();
 	loadLanguage();
+
+	db = new Database;
 
 	tabbar = new QTabWidget();
 	statuswindow = new StatusWindow();
@@ -33,13 +36,12 @@ MainWindow::MainWindow()
 	setCentralWidget(tabbar);
 	retranslateUi();
 
-	connect(iec104, SIGNAL(readMessage(const QByteArray&)), statuswindow, SLOT(iecReadMessage(const QByteArray&)));
-	connect(iec104, SIGNAL(writeMessage(const QByteArray&)), statuswindow, SLOT(iecWriteMessage(const QByteArray&)));
+	connect(iec104, SIGNAL(iecMessage(const QByteArray&, bool)), statuswindow, SLOT(iecMessage(const QByteArray&, bool)));
 }
 
 MainWindow::~MainWindow()
 {
-
+	delete db;
 }
 
 // The text in the menu are set in retranslateUi to be able to switch language 'on the fly'.

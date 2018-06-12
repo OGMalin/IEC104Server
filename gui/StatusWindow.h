@@ -11,8 +11,7 @@ class StatusWindow : public QWidget
 	Q_OBJECT
 
 public slots:
-	void iecReadMessage(const QByteArray&);
-	void iecWriteMessage(const QByteArray&);
+	void iecMessage(const QByteArray&, bool);
 
 public:
 	StatusWindow(QWidget* parent=0);

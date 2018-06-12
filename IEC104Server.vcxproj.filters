@@ -85,6 +85,9 @@
     <ClCompile Include="gui\IECWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gui\Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="gui\icon\GB.png">
@@ -117,6 +120,9 @@
     </QtMoc>
     <QtMoc Include="iec\IEC104Slave.h">
       <Filter>IEC</Filter>
+    </QtMoc>
+    <QtMoc Include="gui\Database.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
