@@ -7,6 +7,7 @@ class QTableWidget;
 class QPushButton;
 class QAction;
 class QContextMenuEvent;
+class QComboBox;
 
 class IECWindow : public QWidget
 {
@@ -17,7 +18,7 @@ public slots:
 	void read();
 	void updateTable();
 	void add();
-
+	void cellChanged(int, int);
 public:
 	IECWindow(QWidget* parent = 0);
 
@@ -29,4 +30,5 @@ private:
 	QAction* addAct;
 
 	void contextMenuEvent(QContextMenuEvent* event);
+	void setupAsduCombo(QComboBox* combo, int selected=0);
 };
