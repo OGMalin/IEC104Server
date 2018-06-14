@@ -48,7 +48,7 @@ bool Database::create()
 		return false;
 
 	QSqlQuery query(db);
-	query.exec("CREATE TABLE info ( id INTEGER, type TEXT, version TEXT, PRIMARY KEY(id) );");
+	query.exec("CREATE TABLE info ( type TEXT, version TEXT, PRIMARY KEY;");
 	query.prepare("INSERT INTO info (type, version) VALUES ( :type, :version);");
 	query.bindValue(":type", DBTYPE);
 	query.bindValue(":version", DBVERSION);

@@ -3,11 +3,13 @@
 #include "Database.h"
 #include <QWidget>
 
-class QTableWidget;
+class QTableView;
+class QStandardItemModel;
 class QPushButton;
 class QAction;
 class QContextMenuEvent;
 class QComboBox;
+class QStandardItem;
 
 class IECWindow : public QWidget
 {
@@ -18,17 +20,18 @@ public slots:
 	void read();
 	void updateTable();
 	void add();
-	void cellChanged(int, int);
+	void itemChanged(QStandardItem*);
 public:
 	IECWindow(QWidget* parent = 0);
 
 private:
-	QTableWidget* table;
+	bool dirty;
+	QTableView* table;
+	QStandardItemModel* model;
 	QPushButton* saveTable;
 	QPushButton* readTable;
 	QVector<IECData> data;
 	QAction* addAct;
 
 	void contextMenuEvent(QContextMenuEvent* event);
-	void setupAsduCombo(QComboBox* combo, int selected=0);
 };

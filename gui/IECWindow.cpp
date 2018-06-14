@@ -1,5 +1,7 @@
 #include "IECWindow.h"
-#include <QTableWidget>
+#include "IECDelegate.h"
+#include <QTableView>
+#include <QStandardItemModel>
 #include <QPushButton>
 #include <QBoxLayout>
 #include <QStringList>
@@ -8,6 +10,8 @@
 #include <QMenu>
 #include <QComboBox>
 #include <QDebug>
+#include <QStandardItem>
+#include <QHeaderView>
 
 IECWindow::IECWindow(QWidget* parent)
 	:QWidget(parent)
@@ -16,7 +20,20 @@ IECWindow::IECWindow(QWidget* parent)
 	QHBoxLayout* hbox = new QHBoxLayout;
 	saveTable = new QPushButton("Save");
 	readTable = new QPushButton("Reload");
-	table = new QTableWidget(0, 4);
+
+	model = new QStandardItemModel(0,5);
+	QStringList header;
+	header << "Id" << "Address" << "ASDU" << "SNMP link" << "Description";
+	model->setHorizontalHeaderLabels(header);
+	table = new QTableView;
+	table->setModel(model);
+	table->hideColumn(0);
+	
+	IECAsduDelegate* asduDelegate = new IECAsduDelegate;
+	table->setItemDelegateForColumn(2, asduDelegate);
+
+	read();
+
 
 	hbox->addWidget(readTable);
 	hbox->addWidget(saveTable);
@@ -29,24 +46,66 @@ IECWindow::IECWindow(QWidget* parent)
 
 	addAct = new QAction("Add", this);
 	connect(addAct, &QAction::triggered, this, &IECWindow::add);
-	connect(table, SIGNAL(cellChanged(int, int)), this, SLOT(cellChanged(int, int)));
-	read();
+	connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(itemChanged(QStandardItem*)));
+	dirty = false;
 }
 
 void IECWindow::save()
 {
+	if (!dirty)
+		return;
+	Database db;
+	db.add(data);
 
 }
 
 void IECWindow::read()
 {
+	IECData test;
+	test.id = 0;
+	test.snmpid = 0;
+	test.address = 1234;
+	test.description = "For testing";
+	test.type = 31;
 	Database db;
 	db.read(data);
+	data.push_back(test);
+	data.push_back(test);
+	data.push_back(test);
 	updateTable();
 }
 
 void IECWindow::updateTable()
 {
+	QStandardItem* item;
+	int col, row;
+	if (!data.size())
+		return;
+
+	model->setRowCount(data.size());
+	QVector<IECData>::iterator it = data.begin();
+	row = 0;
+	while (it != data.end())
+	{
+		col = 0;
+		item = new QStandardItem;
+		item->setData(it->id, Qt::EditRole);
+		model->setItem(row, col++, item);
+		item = new QStandardItem;
+		item->setData(it->address,Qt::EditRole);
+		model->setItem(row, col++, item);
+		item = new QStandardItem;
+		item->setData(asduType[it->type], Qt::EditRole);
+		model->setItem(row, col++, item);
+		item = new QStandardItem;
+		item->setData(it->snmpid, Qt::EditRole);
+		model->setItem(row, col++, item);
+		item = new QStandardItem;
+		item->setData(it->description, Qt::EditRole);
+		model->setItem(row++, col, item);
+		++it;
+	}
+/*
 	QTableWidgetItem* item;
 	QComboBox* citem;
 	QStringList id;
@@ -62,24 +121,10 @@ void IECWindow::updateTable()
 	table->setHorizontalHeaderItem(3, item);
 	table->setRowCount(data.size());
 	QVector<IECData>::iterator it = data.begin();
-	row = 0;
-	while (it != data.end())
-	{
-		col = 0;
-		id.append(QString().number(it->id));
-		item = new QTableWidgetItem(QString().number(it->address));
-		table->setItem(row, col++, item);
-		citem = new QComboBox();
-		setupAsduCombo(citem, it->type);
-		table->setCellWidget(row, col++, citem);
-		item = new QTableWidgetItem(QString().number(it->snmpid));
-		table->setItem(row, col++, item);
-		item = new QTableWidgetItem(it->description);
-		table->setItem(row++, col, item);
-		++it;
-	}
+
 	table->setVerticalHeaderLabels(id);
 	table->scrollToBottom();
+	*/
 }
 
 void IECWindow::contextMenuEvent(QContextMenuEvent* event)
@@ -97,33 +142,37 @@ void IECWindow::add()
 	iec.snmpid = 0;
 	iec.type = 0;
 	data.push_back(iec);
-	updateTable();
+	int rows = model->rowCount();
+	model->setRowCount(rows + 1);
+
+	QStandardItem* item;
+	int col = 0;
+	item = new QStandardItem;
+	item->setData(iec.id, Qt::EditRole);
+	model->setItem(rows, col++, item);
+	item = new QStandardItem;
+	item->setData(iec.address, Qt::EditRole);
+	model->setItem(rows, col++, item);
+	item = new QStandardItem;
+	item->setData(asduType[iec.type], Qt::EditRole);
+	model->setItem(rows, col++, item);
+	item = new QStandardItem;
+	item->setData(iec.snmpid, Qt::EditRole);
+	model->setItem(rows, col++, item);
+	item = new QStandardItem;
+	item->setData(iec.description, Qt::EditRole);
+	model->setItem(rows, col, item);
 }
 
-void IECWindow::setupAsduCombo(QComboBox* combo, int selected)
+void IECWindow::itemChanged(QStandardItem* item)
 {
-	combo->addItem("",0);
-	combo->addItem("M_SP_NA_1 (1)", 1);
-	combo->addItem("M_DP_NA_1 (3)", 3);
-	combo->addItem("M_ME_NA_1 (9)", 9);
-	combo->addItem("M_ME_NC_1 (13)", 13);
-	combo->addItem("M_SP_TB_1 (30)", 30);
-	combo->addItem("M_DP_TB_1 (31)", 31);
-	combo->addItem("C_SC_NA_1 (45)", 45);
-	combo->addItem("C_DC_NA_1 (46)", 46);
-	combo->addItem("C_SC_TA_1 (58)", 58);
-	combo->addItem("C_DC_TA_1 (59)", 59);
-	for (int i = 0; i < combo->count(); i++)
+	qDebug() << "itemChanged ( " << item->row() << "," << item->column() << ")";
+	int id = model->item(item->row(), 0)->data().toInt();
+
+	switch (item->column())
 	{
-		if (combo->itemData(i) == selected)
-		{
-			combo->setCurrentIndex(i);
-			return;
-		}
+	case 1:
 	}
-}
-
-void IECWindow::cellChanged(int row, int col)
-{
-	qDebug() << "cell changed ( " << row << "," << col << ")";
+	dirty = true;
+	
 }
