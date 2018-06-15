@@ -21,12 +21,12 @@ MainWindow::MainWindow()
 	statusBar();
 	loadLanguage();
 
-	db = new Database;
+	database = new Database;
 
 	tabbar = new QTabWidget();
 	statuswindow = new StatusWindow();
-	iecwindow = new IECWindow();
-	snmpwindow = new SNMPWindow();
+	iecwindow = new IECWindow(database);
+	snmpwindow = new SNMPWindow(database);
 	iec104 = new IEC104Slave();
 
 	tabbar->addTab(statuswindow, "Status");
@@ -41,7 +41,7 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-	delete db;
+	delete database;
 }
 
 // The text in the menu are set in retranslateUi to be able to switch language 'on the fly'.

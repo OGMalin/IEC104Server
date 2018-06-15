@@ -37,7 +37,6 @@ private:
 	IECWindow* iecwindow;
 	SNMPWindow* snmpwindow;
 	IEC104Slave* iec104;
-	Database* db;
 	void closeEvent(QCloseEvent* event) override;
 	void createMenu();
 	void loadLanguage();
@@ -52,6 +51,8 @@ protected slots:
 	void slotLanguageChanged(QAction* action);
 
 public:
+	Database * database;
+
 	MainWindow();
 	virtual ~MainWindow();
 };

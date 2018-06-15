@@ -27,7 +27,8 @@ public:
 	Database(QObject *parent=0);
 	~Database();
 	bool create();
-	bool add(IECData& data, bool isOpen=false);
+	int add(IECData& data, bool isOpen=false);
 	bool add(QVector<IECData>& data);
 	bool read(QVector<IECData>& data);
+	void remove(IECData& data);
 };

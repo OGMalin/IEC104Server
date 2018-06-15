@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Database.h"
 #include <QWidget>
 
 class SNMPWindow : public QWidget
@@ -7,5 +8,6 @@ class SNMPWindow : public QWidget
 	Q_OBJECT
 
 public:
-	SNMPWindow(QWidget* parent = 0);
+	Database* database;
+	SNMPWindow(Database* db);
 };

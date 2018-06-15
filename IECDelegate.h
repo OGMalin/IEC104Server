@@ -10,7 +10,8 @@ class QObject;
 class QWidget;
 class QAbstractItemModel;
 
-extern QMap<int, QString> asduType;
+extern int asduInt(QString& s);
+extern QString asduString(int n);
 
 class IECAsduDelegate : public QStyledItemDelegate
 {

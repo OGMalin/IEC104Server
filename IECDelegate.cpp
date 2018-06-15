@@ -4,10 +4,12 @@
 #include <QAbstractItemModel>
 
 QMap<int, QString> asduType;
+static bool  asduIsinit = false;
 
-IECAsduDelegate::IECAsduDelegate(QObject *parent)
-	: QStyledItemDelegate(parent)
+void asduInit()
 {
+	if (asduIsinit)
+		return;
 	asduType[0] = "";
 	asduType[1] = "M_SP_NA_1 (1)";
 	asduType[3] = "M_DP_NA_1 (3)";
@@ -19,6 +21,38 @@ IECAsduDelegate::IECAsduDelegate(QObject *parent)
 	asduType[46] = "C_DC_NA_1 (46)";
 	asduType[58] = "C_SC_TA_1 (58)";
 	asduType[59] = "C_DC_TA_1 (59)";
+	asduIsinit = true;
+};
+
+int asduInt(QString& s)
+{
+	asduInit();
+	QMap<int, QString>::const_iterator it = asduType.begin();
+	while (it != asduType.end())
+	{
+		if (it.value() == s)
+			return it.key();
+		++it;
+	}
+	return 0;
+};
+
+QString asduString(int n)
+{
+	asduInit();
+	QMap<int, QString>::const_iterator it = asduType.begin();
+	while (it != asduType.end())
+	{
+		if (it.key() == n)
+			return it.value();
+		++it;
+	}
+	return QString();
+};
+
+IECAsduDelegate::IECAsduDelegate(QObject *parent)
+	: QStyledItemDelegate(parent)
+{
 }
 
 QWidget* IECAsduDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const

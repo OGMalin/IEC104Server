@@ -1,7 +1,7 @@
 #include "SNMPWindow.h"
 
-SNMPWindow::SNMPWindow(QWidget* parent)
-	:QWidget(parent)
+SNMPWindow::SNMPWindow(Database* db)
+	:QWidget()
 {
-
+	database = db;
 }

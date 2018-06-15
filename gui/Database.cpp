@@ -60,14 +60,14 @@ bool Database::create()
 		"type INTEGER,"
 		"snmpid INTEGER,"
 		"description TEXT,"
-		"PRIMARY KEY(id,address)); ");
+		"PRIMARY KEY(id)); ");
 
 	query.exec("CREATE TABLE stations ( "
 		"id INTEGER,"
 		"station TEXT,"
 		"addresses BLOB,"
 		"description TEXT,"
-		"PRIMARY KEY(id, station));");
+		"PRIMARY KEY(id));");
 
 	query.exec("CREATE TABLE snmp ( "
 		"id INTEGER,"
@@ -77,16 +77,16 @@ bool Database::create()
 		"iecid INTEGER,"
 		"poll INTEGER,"
 		"description TEXT,"
-		"PRIMARY KEY(id,station));");
+		"PRIMARY KEY(id));");
 
 	db.close();
 	return true;
 }
 
-bool Database::add(IECData& data, bool isOpen)
+int Database::add(IECData& data, bool isOpen)
 {
 	if (!isOpen && !db.open())
-		return false;
+		return 0;
 	QSqlQuery query(db);
 	if (data.id != 0)
 	{
@@ -107,9 +107,10 @@ bool Database::add(IECData& data, bool isOpen)
 	query.bindValue(":snmpid", data.snmpid);
 	query.bindValue(":description", data.description);
 	query.exec();
+	data.id= query.lastInsertId().toInt();
 	if (!isOpen)
 		db.close();
-	return true;
+	return data.id;
 }
 
 bool Database::add(QVector<IECData>& data)
@@ -124,6 +125,17 @@ bool Database::add(QVector<IECData>& data)
 	}
 	db.close();
 	return true;
+}
+
+void Database::remove(IECData& data)
+{
+	if (!db.open())
+		return;
+	QSqlQuery query(db);
+	query.prepare("DELETE FROM iec WHERE id = :id;");
+	query.bindValue(":id", data.id);
+	query.exec();
+	db.close();
 }
 
 bool Database::read(QVector<IECData>& data)
